@@ -25,6 +25,8 @@ RUN apk update && \
     pip install azure-mgmt-resource && \
     pip install azure-mgmt-storage && \
     pip install pyvmomi && \
+    pip install request && \
+    pip install request-oauthlib && \
     chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
     chmod 0666 /var/log/stdout && \
