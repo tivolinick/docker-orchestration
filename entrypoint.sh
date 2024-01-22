@@ -2,7 +2,7 @@
 set -e
 
 DAEMON=sshd
-TURBOADDR=${TURBOADDR:="https:/10.188.161.53"}
+TURBOADDR=${TURBOADDR:="10.188.161.53"}
 TURBOUSER=${TURBOUSER:="administrator"}
 TURBOPASS=${TURBOPASS:="ta5t1c!"}
 ADDR=${ADDR:="actionscripts.turbointegrations.svc.cluster.local"}
@@ -20,14 +20,14 @@ stop() {
     # Wait for exit
     wait "${pid}"
     # All done.
-    echo "Done."
+    echo "Done." term
 }
 
 function vmtLogin() {
   vmtLogout
-  local login="http://${TURBOADDR}/vmturbo/rest/login"
+  local login="https://${TURBOADDR}/vmturbo/rest/login"
   echo Login response:
-  curl -s -k -K POST -d "username=${TURBOUSER}&password=${TURBOPASS}" -c $cookies $login \
+  curl -s -k -d "username=${TURBOUSER}&password=${TURBOPASS}" -c $cookies $login \
      | python -m json.tool
 }
 
@@ -37,11 +37,11 @@ function vmtLogout() {
 
 function vmtCreateTarget() {
     local pkey=$(awk 'ORS="\\n"' "/sshkeys/turboauthorizedkey")
-    local url="http://$TURBOADDR/vmturbo/rest/targets"
+    local url="https://$TURBOADDR/vmturbo/rest/targets"
     local payload="$(getRequest "$pkey")"
     echo $payload
     echo Target creation response:
-    curl -s -k -K POST -d "$payload" -H 'Content-Type: application/json' -b $cookies "$url" \
+    curl -s -k -X POST -d "$payload" -H 'Content-Type: application/json' -b $cookies "$url" \
 	| python -m json.tool
 }
 
@@ -74,7 +74,7 @@ function mkarray() {
 function vmtTargetExists() {
   local displayName="$ADDR-$MANPATH"
   echo "Looking for a preexisting target with the name '$displayName'"
-  local url="http://$TURBOADDR/vmturbo/rest/targets"
+  local url="https://$TURBOADDR/vmturbo/rest/targets"
   local res=$(curl -s -k -H 'Accept: application/json' -b $cookies "$url" | jq -r ".[] | select(.displayName==\"$displayName\").displayName")
   if [ "$res" = "$displayName" ]; then
     echo "Found"
