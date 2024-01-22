@@ -2,9 +2,9 @@
 set -e
 
 DAEMON=sshd
-TURBOADDR=${TURBOADDR:="api.turbonomic.svc.cluster.local:8080"}
+TURBOADDR=${TURBOADDR:="https:/10.188.161.53"}
 TURBOUSER=${TURBOUSER:="administrator"}
-TURBOPASS=${TURBOPASS:="administrator"}
+TURBOPASS=${TURBOPASS:="ta5t1c!"}
 ADDR=${ADDR:="actionscripts.turbointegrations.svc.cluster.local"}
 PORT=${PORT:=22}
 USER=${USER:="turbo"}
