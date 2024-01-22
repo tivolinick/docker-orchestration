@@ -19,6 +19,8 @@ This is a base docker image for orchestration (custom action scripts) solutions 
   * azure-mgmt-resource
   * azure-mgmt-storage
   * pyvmomi
+  * requests
+  * requests-oauthlib
 
 # Usage
 When deployed with the necessary [prerequisites](#prerequisites), this image will add itself as an orchestration target to the Turbonomic instance in the same Kubernetes cluster and namespace.
