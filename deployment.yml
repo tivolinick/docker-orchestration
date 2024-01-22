@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: actionscripts
-        image: turbointegrations/orchestration:0.0.3
+        image: nickfreer/orchestration:0.0.3
         imagePullPolicy: IfNotPresent
         env:
         - name: TURBOPASS
