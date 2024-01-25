@@ -1,0 +1,30 @@
+{
+    "scripts": [
+        {
+            "name": "replace_resize_vm",
+            "description": "REPLACES Turbonomic resize orchestration. Echos the environment to stdout and takes no action.",
+            "scriptPath": "./replace_resize_vm.sh",
+            "entityType": "VIRTUAL_MACHINE",
+            "actionType": "RESIZE",
+           "actionPhase": "PRE"
+        },
+        {
+            "name": "ndf test",
+            "description": "test script entry.",
+            "scriptPath": "./ndfmovepre.sh",
+            "entityType": "VIRTUAL_MACHINE",
+            "actionType": "MOVE",
+           "actionPhase": "PRE"
+        },
+        {
+            "name": "second test",
+            "description": "Another test entry",
+            "scriptPath": "./ndftest2.sh",
+            "entityType": "VIRTUAL_MACHINE",
+            "actionType": "RESIZE",
+           "actionPhase": "PRE"
+
+        }
+     ]
+   }
+   
