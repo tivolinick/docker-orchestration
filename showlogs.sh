@@ -1,1 +1,1 @@
-kubectl logs $(kubectl get po | awk '/rsys/ {print $1}')
+kubectl logs $(kubectl get po | awk '/rsys/ {print $1}') $*
