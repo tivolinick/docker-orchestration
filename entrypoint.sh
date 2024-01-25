@@ -114,8 +114,8 @@ if [ ! -e "$MANPATH" ]; then
  		"description": "REPLACES Turbonomic resize orchestration. Echos the environment to stdout and takes no action.",
  		"scriptPath": "./replace_resize_vm.sh",
  		"entityType": "VIRTUAL_MACHINE",
- 		"actionType": "RIGHT_SIZE",
-		"actionPhase": "REPLACE"
+ 		"actionType": "RESIZE",
+		"actionPhase": "PRE"
  	}
   ]
 }
