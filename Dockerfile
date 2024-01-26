@@ -27,6 +27,7 @@ RUN apk update && \
     pip install pyvmomi && \
     pip install requests && \
     pip install requests-oauthlib && \
+    pip install json && \
     chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
     chmod 0666 /var/log/stdout && \
@@ -35,3 +36,5 @@ RUN apk update && \
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config"]
+
+COPY ./actionscripts/. /opt/tubonomic/actionscripts

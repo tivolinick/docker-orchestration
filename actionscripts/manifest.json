@@ -6,7 +6,7 @@
             "scriptPath": "./replace_resize_vm.sh",
             "entityType": "VIRTUAL_MACHINE",
             "actionType": "RESIZE",
-           "actionPhase": "PRE"
+            "actionPhase": "PRE"
         },
         {
             "name": "ndf test",
@@ -14,17 +14,16 @@
             "scriptPath": "./ndfmovepre.sh",
             "entityType": "VIRTUAL_MACHINE",
             "actionType": "MOVE",
-           "actionPhase": "PRE"
+            "actionPhase": "PRE"
         },
         {
-            "name": "second test",
-            "description": "Another test entry",
-            "scriptPath": "./ndftest2.sh",
+            "name": "target test",
+            "description": "send data to test site",
+            "scriptPath": "./outputstuff.py",
             "entityType": "VIRTUAL_MACHINE",
             "actionType": "RESIZE",
-           "actionPhase": "PRE"
-
+            "actionPhase": "PRE"
         }
-     ]
-   }
+    ]
+}
    
