@@ -59,3 +59,29 @@ spec:
     protocol: TCP
   selector:
     app: actionscripts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: turbointegrations
+  labels:
+    zone: internal
+  name: actionstatus
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalIPs:
+  - 10.188.161.53
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: status
+    nodePort: 32000
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: actionscripts
+  type: LoadBalancer

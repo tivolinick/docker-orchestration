@@ -3,7 +3,7 @@ ARG flavor=alpine
 FROM turbointegrations/base:1-$flavor
 
 COPY entrypoint.sh /entrypoint.sh
-
+COPY server.py /server.py
 RUN apk update && \
     apk --no-cache add bash git openssh augeas shadow jq curl && \
     groupadd -g 1000 turbo && \
@@ -15,19 +15,11 @@ RUN apk update && \
     augtool 'set /files/etc/ssh/sshd_config/AuthorizedKeysFile "/etc/authorized_keys/%u"' && \
     augtool 'set /files/etc/ssh/sshd_config/HostKey[1] /etc/ssh/keys/hostkey' && \
     echo -e "Port 22\n" >> /etc/ssh/sshd_config && \
-    pip install boto3 && \
-    pip install msrest && \
-    pip install msrestazure && \
-    pip install azure-common && \
-    pip install azure-mgmt-commerce && \
-    pip install azure-mgmt-compute && \
-    pip install azure-mgmt-network && \
-    pip install azure-mgmt-resource && \
-    pip install azure-mgmt-storage && \
     pip install pyvmomi && \
     pip install requests && \
     pip install requests-oauthlib && \
-    pip install json && \
+    pip install flask && \
+    pip install waitress && \
     chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
     chmod 0666 /var/log/stdout && \
@@ -37,4 +29,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config"]
 
-COPY ./actionscripts/. /opt/tubonomic/actionscripts
+COPY ./actionscripts/. /opt/turbonomic/actionscripts

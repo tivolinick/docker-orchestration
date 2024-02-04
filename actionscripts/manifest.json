@@ -9,17 +9,9 @@
             "actionPhase": "PRE"
         },
         {
-            "name": "ndf test",
-            "description": "test script entry.",
-            "scriptPath": "./ndfmovepre.sh",
-            "entityType": "VIRTUAL_MACHINE",
-            "actionType": "MOVE",
-            "actionPhase": "PRE"
-        },
-        {
-            "name": "target test",
-            "description": "send data to test site",
-            "scriptPath": "./outputstuff.py",
+            "name": "webhook trigger",
+            "description": "send data to a webhook",
+            "scriptPath": "./webhook_trigger.py",
             "entityType": "VIRTUAL_MACHINE",
             "actionType": "RESIZE",
             "actionPhase": "PRE"
