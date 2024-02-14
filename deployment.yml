@@ -42,10 +42,20 @@ spec:
         volumeMounts:
         - mountPath: /sshkeys
           name: sshkeys
+        - mountPath: /externalhosts
+          name: sources
       volumes:
       - name: sshkeys
         secret:
           secretName: actionscriptkeys
+      - name: sources
+        configMap:
+          name: externalhosts
+          items:
+          - key: turbo_host
+            path: turbohost
+          - key: db_host
+            path: dbhost
 ---
 apiVersion: v1
 kind: Service
