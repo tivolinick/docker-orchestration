@@ -18,3 +18,4 @@ else
 fi
 
 echo kubectl config set-context --current --namespace=$ns
+kubectl config set-context --current --namespace=$ns
