@@ -43,12 +43,19 @@ spec:
         - mountPath: /sshkeys
           name: sshkeys
         - mountPath: /externalhosts
-          name: sources
+          name: externalhosts
+        - mountPath: /actionscriptrefs
+          name: actionscriptrefs
+        - mountPath: /actionscriptcreds
+          name: actionscriptcreds
       volumes:
       - name: sshkeys
         secret:
           secretName: actionscriptkeys
-      - name: sources
+      - name: actionscriptcreds
+        secret:
+          secretName: actionscriptcreds
+      - name: externalhosts
         configMap:
           name: externalhosts
           items:
@@ -60,6 +67,14 @@ spec:
             path: dbport
           - key: ansible_host
             path: ansiblehost
+      - name: actionscriptrefs
+        configMap:
+          name: actionscriptrefs
+          items:
+          - key: startup
+            path: startup
+          - key: shutdown
+            path: shutdown            
 ---
 apiVersion: v1
 kind: Service
