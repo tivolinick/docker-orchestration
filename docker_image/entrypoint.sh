@@ -151,7 +151,7 @@ if [ "$(basename $1)" == "$DAEMON" ]; then
     fi
     vmtLogout
     tail -qf /var/log/stdout &
-    /server.py
+    # /server.py
     wait "${pid}"
 else
     exec "$@"

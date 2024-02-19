@@ -58,23 +58,9 @@ spec:
       - name: externalhosts
         configMap:
           name: externalhosts
-          items:
-          - key: turbo_host
-            path: turbohost
-          - key: db_host
-            path: dbhost
-          - key: db_port
-            path: dbport
-          - key: ansible_host
-            path: ansiblehost
       - name: actionscriptrefs
         configMap:
           name: actionscriptrefs
-          items:
-          - key: startup
-            path: startup
-          - key: shutdown
-            path: shutdown            
 ---
 apiVersion: v1
 kind: Service
@@ -114,3 +100,22 @@ spec:
   selector:
     app: actionscripts
   type: LoadBalancer
+
+
+        #  items:
+        #   - key: turbo_host
+        #     path: turbohost
+        #   - key: db_host
+        #     path: db_host
+        #   - key: db_name
+        #     path: db_name
+        #   - key: db_port
+        #     path: db_port
+        #   - key: ansible_host
+        #     path: ansible_host
+
+        #  items:
+        #   - key: startup
+        #     path: startup
+        #   - key: shutdown
+        #     path: shutdown            

@@ -9,6 +9,22 @@
             "actionPhase": "PRE"
         },
         {
+            "name": "Shutdown VM services",
+            "description": "Shuts down services on a VM and any dependent VMs in order.",
+            "scriptPath": "./shutdown.py",
+            "entityType": "VIRTUAL_MACHINE",
+            "actionType": "RESIZE",
+            "actionPhase": "PRE"
+        },
+        {
+            "name": "Startup VM services",
+            "description": "Starts up services on a VM and any dependent VMs in order.",
+            "scriptPath": "./startup.py",
+            "entityType": "VIRTUAL_MACHINE",
+            "actionType": "RESIZE",
+            "actionPhase": "POST"
+        },
+        {
             "name": "webhook trigger",
             "description": "send data to a webhook",
             "scriptPath": "./webhook_trigger.py",

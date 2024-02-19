@@ -3,7 +3,7 @@ ARG flavor=alpine
 FROM turbointegrations/base:1-$flavor
 
 COPY entrypoint.sh /entrypoint.sh
-COPY server.py /server.py
+# COPY server.py /server.py
 RUN apk update && \
     apk --no-cache add bash git openssh augeas shadow jq curl && \
     groupadd -g 1000 turbo && \
@@ -18,8 +18,8 @@ RUN apk update && \
     pip install pyvmomi && \
     pip install requests && \
     pip install requests-oauthlib && \
-    pip install flask && \
-    pip install waitress && \
+    # pip install flask && \
+    # pip install waitress && \
     pip install psycopg2-binary && \
     chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
