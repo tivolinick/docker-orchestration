@@ -22,7 +22,7 @@ print(envs)
 
 # Read in the data about the action
 action_data = json.loads(sys.stdin.read())
-server = action_data[0]['targetSE']['displayName']
+server = action_data['actionItem'][0]['targetSE']['displayName']
 print(server)
 
 # open a DB connection and return a cursor
