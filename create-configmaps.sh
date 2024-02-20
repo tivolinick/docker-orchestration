@@ -11,4 +11,4 @@ kubectl create configmap externalhosts -n turbointegrations \
 kubectl delete configmap actionscriptrefs -n turbointegrations 
 kubectl create configmap actionscriptrefs -n turbointegrations \
 --from-literal startup='14' \
---from-literal shutdown='14'
+--from-literal shutdown='16'

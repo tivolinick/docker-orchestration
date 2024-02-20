@@ -173,7 +173,7 @@ def build_vm_entry(vm_id, db_data, turbo_data):
 
 
 def read_envs(dir_name, envs_obj):
-    dir_name = f'//users//nickfreer{dir_name}'
+    # dir_name = f'//users//nickfreer{dir_name}'
     for filename in os.listdir(dir_name):
         if 'key' not in filename:
             f = open(f'{dir_name}/{filename}', 'r')

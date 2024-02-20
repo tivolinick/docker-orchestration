@@ -18,8 +18,6 @@ RUN apk update && \
     pip install pyvmomi && \
     pip install requests && \
     pip install requests-oauthlib && \
-    # pip install flask && \
-    # pip install waitress && \
     pip install psycopg2-binary && \
     chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
