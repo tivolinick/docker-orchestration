@@ -6,7 +6,7 @@
             "scriptPath": "./replace_resize_vm.sh",
             "entityType": "VIRTUAL_MACHINE",
             "actionType": "RESIZE",
-            "actionPhase": "PRE"
+            "actionPhase": "REPLACE"
         },
         {
             "name": "Shutdown VM services",

@@ -91,10 +91,10 @@ for id in stop_order:
     for ip in turbo_data[0]['aspects']['virtualMachineAspect']['ip']:
         ansible_payload['inventory'] += f' {ip}'
 ansible_payload['inventory'] = ansible_payload['inventory'].strip()
-# print(ansible_payload)
 
 ansible_api = getdata.AnsibleApi(envs['ansible_host'], envs['ansible_user'], envs['ansible_pass'], 3, 1)
 payload = {"extra_vars": json.dumps(ansible_payload)}
+print(f'PAYLOAD- {payload}')
 job = ansible_api.launch_job(envs['shutdown'], payload)
 status = ansible_api.wait_for_job(job)
 print(status)
