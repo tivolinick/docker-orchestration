@@ -1,0 +1,1 @@
+python3 job-status.py | tail -1 | jq '.results[].stdout'

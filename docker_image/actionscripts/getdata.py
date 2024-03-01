@@ -86,7 +86,21 @@ class AnsibleApi:
         url = f'{self.url}/jobs/{job_id}/'
         print(url)
         r = requests.get(url, auth=self.auth, verify=False)
+        print(json.loads(r.text))
         return json.loads(r.text)['status']
+
+    def get_event_status(self, job_id) -> str:
+        url = f'{self.url}/jobs/{job_id}/job_events/'
+        print(url)
+        r = requests.get(url, auth=self.auth, verify=False)
+        print(r.text)
+        stat = json.loads(r.text)
+        print(stat)
+        for theLine in [line['stdout'] for line in stat['results'] if 'STATUS:' in line['stdout']]:
+            print(theLine)
+            if 'Success' not in theLine:
+                return theLine
+        return 'success'
 
     def wait_for_job(self, job_id) -> str:
         status = self.get_job_status(job_id)
@@ -97,10 +111,15 @@ class AnsibleApi:
             time.sleep(self.interval_secs)
             status = self.get_job_status(job_id)
             count += 1
+        print(f'FINAL:STATUS: {status}')
         if status == 'running':
             sys.exit('Ansible job timed out')
-        else:
-            return status
+        if status != 'successful':
+            sys.exit('Ansible job failed')
+        status = self.get_event_status(job_id)
+        if status != 'success':
+            sys.exit(f'Ansible job failed with this message - {status}')
+        return status
 
 
 '''
@@ -114,6 +133,8 @@ class AnsibleApi:
 def mapper(order, target, forwards, backwards):
     prev = 0
     for str_item in order:
+        if str_item == '':
+            continue
         item = int(str_item)
         print(f'item: {item}, prev: {prev}, (matching {target})')
         print(type(item))
@@ -164,7 +185,11 @@ def build_vm_entry(vm_id, db_data, turbo_data):
     host_line['displayName'] = turbo_data[0]['displayName']
     host_line['uuid'] = turbo_data[0]['uuid']
     host_line['vmhost'] = turbo_data[0]['discoveredBy']['displayName']
-    host_line['ip'] = turbo_data[0]['aspects']['virtualMachineAspect']['ip']
+    # Need to check if IP is defined
+    try:
+        host_line['ip'] = turbo_data[0]['aspects']['virtualMachineAspect']['ip']
+    except KeyError:
+        sys.exit(f'No IP Address found for {host_line['displayName']}. VM may be powered off')
     host_line['startcmd'] = db_data[0][2]
     host_line['stopcmd'] = db_data[0][3]
     host_line['statuscmd'] = db_data[0][4]
@@ -173,9 +198,7 @@ def build_vm_entry(vm_id, db_data, turbo_data):
 
 
 def read_envs(dir_name, envs_obj):
-    # dir_name = f'//users//nickfreer{dir_name}'
     for filename in os.listdir(dir_name):
         if 'key' not in filename and '..' not in filename:
             f = open(f'{dir_name}/{filename}', 'r')
             envs_obj[filename] = f.readline().splitlines()[0]
-            
