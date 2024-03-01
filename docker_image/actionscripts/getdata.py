@@ -64,7 +64,7 @@ class TurboApi:
 
 
 class AnsibleApi:
-    def __init__(self, host, username, password, interval_secs=5, timeout_mins=1) -> None:
+    def __init__(self, host, username, password, interval_secs=5, timeout_mins=10) -> None:
         self.url = f'https://{host}/api/v2'
         self.auth = (username, password)
         self.headers = {"Content-Type": "application/json"}
@@ -189,7 +189,7 @@ def build_vm_entry(vm_id, db_data, turbo_data):
     try:
         host_line['ip'] = turbo_data[0]['aspects']['virtualMachineAspect']['ip']
     except KeyError:
-        sys.exit(f'No IP Address found for {host_line['displayName']}. VM may be powered off')
+        sys.exit(f"No IP Address found for {host_line['displayName']}. VM may be powered off")
     host_line['startcmd'] = db_data[0][2]
     host_line['stopcmd'] = db_data[0][3]
     host_line['statuscmd'] = db_data[0][4]
