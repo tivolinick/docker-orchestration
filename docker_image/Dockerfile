@@ -6,7 +6,7 @@ COPY entrypoint.sh /entrypoint.sh
 # COPY server.py /server.py
 RUN apk update && \
     apk --no-cache add bash git openssh augeas shadow jq curl && \
-    apk --no-cache add build-base postgresql-dev gcc python3-dev musl-dev
+    apk --no-cache add build-base gcc python3-dev musl-dev
 RUN groupadd -g 1000 turbo && \
     useradd -r -m -p '' -u 1000 -g 1000 -c 'SSHD User' -s /bin/bash turbo && \
     mkdir -p /etc/authorized_keys && \
@@ -18,8 +18,7 @@ RUN augtool 'set /files/etc/ssh/sshd_config/AuthorizedKeysFile "/etc/authorized_
     echo -e "Port 22\n" >> /etc/ssh/sshd_config 
 RUN pip install pyvmomi && \
     pip install requests  && \
-    pip install requests-oauthlib && \
-    pip install psycopg2-binary
+    pip install requests-oauthlib
 RUN chmod +x /entrypoint.sh && \
     mkfifo /var/log/stdout && \
     chmod 0666 /var/log/stdout && \

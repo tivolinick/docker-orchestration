@@ -36,6 +36,12 @@ spec:
             secretKeyRef:
               name: actionscriptkeys
               key: turbouser
+        - name: TURBO
+          valueFrom:
+            configMapKeyRef:
+              name: externalhosts
+              key: turbo_host
+        TURBOADDR=${TURBOADDR:=$(cat /externalhosts/turbo_host)}      
         ports:
         - name: sshd
           containerPort: 22
