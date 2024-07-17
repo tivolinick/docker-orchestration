@@ -1,6 +1,6 @@
 import requests
 import json
-import psycopg2
+import oracledb
 import sys
 import os
 import time
@@ -13,11 +13,11 @@ import time
 
 
 class DatabaseAppVM:
-    def __init__(self, database, host, port, username, password) -> None:
-        self.database = database
+    def __init__(self, service, host, port, username, password) -> None:
+        self.service = service
         self.host = host
         self.port = port
-        self.conn = psycopg2.connect(database=self.database,
+        self.conn = oracledb.connect(service_name=self.service,
                                      host=self.host,
                                      user=username,
                                      password=password,
@@ -25,7 +25,7 @@ class DatabaseAppVM:
         self.cursor = self.conn.cursor()
 
     def __str__(self) -> str:
-        return f'Database: {self.database} on {self.host}:{self.port}'
+        return f'Service: {self.service} on {self.host}:{self.port}'
 
     def __del__(self) -> None:
         self.close_connection()

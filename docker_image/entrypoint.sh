@@ -2,9 +2,13 @@
 set -e
 
 DAEMON=sshd
-TURBOADDR=${TURBOADDR:="10.188.161.53"}
-TURBOUSER=${TURBOUSER:="administrator"}
-TURBOPASS=${TURBOPASS:="ta5t1c!"}
+# TURBOADDR=${TURBOADDR:="10.44.85.235"}
+# TURBOUSER=${TURBOUSER:="srvTurboUser"}
+# TURBOPASS=${TURBOPASS:="Today@13052024"}
+TURBOADDR=$(cat /externalhosts/turbo_host)
+TURBOUSER=$(cat /actionscriptkeys/turbouser)
+echo "TURBOADDR: ${TURBOADDR}, TURBOUSER: ${TURBOUSER}"
+TURBOPASS=$(cat /actionscriptkeys/turbopass)
 ADDR=${ADDR:="actionscripts.turbointegrations.svc.cluster.local"}
 PORT=${PORT:=22}
 USER=${USER:="turbo"}
