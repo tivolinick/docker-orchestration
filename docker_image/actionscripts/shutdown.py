@@ -23,11 +23,11 @@ for dir in ['//actionscriptcreds', '//actionscriptrefs', '//externalhosts', '//s
 print(envs)
 
 # Read in the data about the action
-# action_data = json.loads(sys.stdin.read())
+action_data = json.loads(sys.stdin.read())
 # FOR DEBUG PURPOSES
-stdin_data = sys.stdin.read()
-requests.post('https://eo5tpbp6fxdjwit.m.pipedream.net/', stdin_data)
-action_data = json.loads(stdin_data)
+# stdin_data = sys.stdin.read()
+# requests.post('https://eo5tpbp6fxdjwit.m.pipedream.net/', stdin_data)
+# action_data = json.loads(stdin_data)
 server = action_data['actionItem'][0]['targetSE']['displayName']
 print(server)
 
@@ -50,35 +50,45 @@ apps = vm_db.execute("SELECT * FROM apps")
 # start_back = {}
 stop_front = {}
 stop_back = {}
+stop_list = []
+
+def getDates(datesStr):
+    dates = json.loads(
+        datesStr.replace("'", '"')
+    )  # make sure we dont break when parsing
+    return dates
+
 
 for app in apps:
-    getdata.mapper(app[3].split(' '), host_info[0][0], stop_front, stop_back)
+    dates = getDates(app[4])
+    stop_list = getdata.mapper_and_ordder(dates, host_info, stop_list)
+
+# for app in apps:
+#     getdata.mapper(app[3].split(' '), host_info[0][0], stop_front, stop_back)
 print('RESULTS')
 print('============STOP==============')
-print(stop_front)
+print(stop_list)
 print(stop_back)
-print(stop_front.keys())
-print(stop_back.keys())
 
 # use the maps to work out the start and stop orders
-stop_order = []
+# stop_list = []
 # return orders
-getdata.order_maps(stop_front, stop_back, stop_order, host_info[0][0])
+# getdata.order_maps(stop_front, stop_back, stop_list, host_info[0][0])
 print("STOP")
-print(stop_order)
+print(stop_list)
 
 # get vm data from the DB for those in the list
-vms = vm_db.execute(f"SELECT * FROM vms WHERE id IN ({','.join(map(str, stop_order))})")
+vms = vm_db.execute(f"SELECT * FROM vms WHERE id IN ({','.join(map(str, stop_list))})")
 del vm_db
-if len(vms) != len(stop_order):
+if len(vms) != len(stop_list):
     print(f'VMS from DB: {vms}')
-    sys.exit(f'Not all the VMs were found in database for ids: {stop_order}')
+    sys.exit(f'Not all the VMs were found in database for ids: {stop_list}')
 
 # log in to the turbo API
 turbo = getdata.TurboApi('10.188.161.53', envs['turbouser'], envs['turbopass'])
 # build the payload
 ansible_payload = {'inventory': '', 'order': []}
-for id in stop_order:
+for id in stop_list:
     db_data = [host_line for host_line in vms if host_line[0] == id]
     turbo_data = turbo.search_turbo_data(db_data[0][1])
     ansible_payload['order'].append(getdata.build_vm_entry(id, db_data, turbo_data))

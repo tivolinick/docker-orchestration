@@ -128,6 +128,21 @@ class AnsibleApi:
 ===================================================================
 '''
 
+def mapper_and_ordder(steps, vms, order):
+    arr = []
+    vms_IDs = []
+    for vm in vms:  # 26,27 , 28
+        vms_IDs.append(vm[0])
+
+    for step in steps:  # 29,30,31,32,33,34
+        for item in step:
+            arr.append(item)
+            if item in vms_IDs:
+                order.extend(arr)
+                arr = []
+                # break
+    return order  # 26, 27,28
+
 
 # Function to map forward and backwards dependencies on start or stop order
 def mapper(order, target, forwards, backwards):
