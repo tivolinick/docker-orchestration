@@ -52,21 +52,18 @@ spec:
           name: externalhosts
         - mountPath: /actionscriptrefs
           name: actionscriptrefs
-        - mountPath: /actionscriptcreds
-          name: actionscriptcreds
+        - mountPath: /gitcreds
+          name: gitcreds
       volumes:
       - name: sshkeys
         secret:
           secretName: actionscriptkeys
-      - name: actionscriptcreds
+      - name: gitcreds
         secret:
-          secretName: actionscriptcreds
+          secretName: gitcreds
       - name: externalhosts
         configMap:
           name: externalhosts
-      - name: actionscriptrefs
-        configMap:
-          name: actionscriptrefs
 ---
 apiVersion: v1
 kind: Service
@@ -90,8 +87,6 @@ metadata:
   name: actionstatus
 spec:
   allocateLoadBalancerNodePorts: true
-  externalIPs:
-  - 10.188.161.53
   externalTrafficPolicy: Local
   internalTrafficPolicy: Cluster
   ipFamilies:

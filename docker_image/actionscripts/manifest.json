@@ -1,0 +1,20 @@
+{
+ "scripts": [
+ 	{
+ 		"name": "output action replace_resize_vm",
+ 		"description": "REPLACES Turbonomic resize orchestration. Echos the environment to stdout and takes no action.",
+ 		"scriptPath": "./replace_resize_vm.sh",
+ 		"entityType": "VIRTUAL_MACHINE",
+ 		"actionType": "RESIZE",
+		"actionPhase": "REPLACE"
+ 	},
+ 	{
+ 		"name": "Scale cloud VM",
+ 		"description": "REPLACES Turbonomic resize orchestration. Echos the environment to stdout and takes no action.",
+ 		"scriptPath": "./scale_action_terra.py",
+ 		"entityType": "VIRTUAL_MACHINE",
+ 		"actionType": "RESIZE",
+		"actionPhase": "REPLACE"
+ 	}
+  ]
+}
